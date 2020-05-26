@@ -37,8 +37,15 @@ namespace _8PuzzleAStar
             List<Node> Checked = new List<Node>();
             List<string> actions = new List<string>();
 
-            setGoalState();
             setStartState();
+            setGoalState();
+
+            if (GoalState == null || StartState == null)
+            {
+                MessageBox.Show("Eksik seçim yaptınız!");
+                return;
+            }
+
 
             //int[,] GoalState = new int[,] {
             //    { 1 , 3 , 2 },
@@ -661,41 +668,54 @@ namespace _8PuzzleAStar
 
             int[,] numbers = new int[3, 3];
 
-            int i = 0;
-            for (int m = 0; m < 3; m++)
+            if (!buttons.Any(x => x.Text.Equals(string.Empty)))
             {
-                for (int n = 0; n < 3; n++)
+                int i = 0;
+                for (int m = 0; m < 3; m++)
                 {
-                    numbers[m, n] = int.Parse(buttons[i].Text);
-                    i++;
+                    for (int n = 0; n < 3; n++)
+                    {
+                        numbers[m, n] = int.Parse(buttons[i].Text);
+                        i++;
+                    }
                 }
-            }
 
-            StartState = numbers;
-            Console.WriteLine(StartState.Length);
+                StartState = numbers;
+            }
+            else
+            {
+                StartState = null;
+            }
         }
 
         private void setGoalState()
         {
+
             Control groupBox = goalStateSelected;
 
             List<Button> buttons = groupBox.Controls.OfType<Button>().ToList();
 
             int[,] numbers = new int[3, 3];
 
-            int i = 0;
-            for (int m = 0; m < 3; m++)
+            if (!buttons.Any(x => x.Text.Equals(string.Empty)))
             {
-                for (int n = 0; n < 3; n++)
+                int i = 0;
+                for (int m = 0; m < 3; m++)
                 {
-                    numbers[m, n] = int.Parse(buttons[i].Text);
-                    i++;
+                    for (int n = 0; n < 3; n++)
+                    {
+                        numbers[m, n] = int.Parse(buttons[i].Text);
+                        i++;
+                    }
                 }
+
+                GoalState = numbers;
+            }
+            else
+            {
+                GoalState = null;
             }
 
-            GoalState = numbers;
-
-            Console.WriteLine(GoalState.Length);
         }
 
 

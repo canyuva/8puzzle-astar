@@ -82,12 +82,14 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 475);
+            this.button1.BackColor = System.Drawing.Color.YellowGreen;
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(12, 425);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(137, 71);
+            this.button1.Size = new System.Drawing.Size(271, 71);
             this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Text = "ÇÖZ";
+            this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // startButton0
@@ -594,10 +596,10 @@
             // 
             // stepsLog
             // 
-            this.stepsLog.Location = new System.Drawing.Point(856, 23);
+            this.stepsLog.Location = new System.Drawing.Point(805, 12);
             this.stepsLog.Name = "stepsLog";
             this.stepsLog.ReadOnly = true;
-            this.stepsLog.Size = new System.Drawing.Size(185, 524);
+            this.stepsLog.Size = new System.Drawing.Size(236, 534);
             this.stepsLog.TabIndex = 38;
             this.stepsLog.Text = "";
             // 
