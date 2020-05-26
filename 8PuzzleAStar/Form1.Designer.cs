@@ -206,7 +206,7 @@
             this.startStateGB.Size = new System.Drawing.Size(238, 239);
             this.startStateGB.TabIndex = 30;
             this.startStateGB.TabStop = false;
-            this.startStateGB.Text = "Başlangıç Durum";
+            this.startStateGB.Text = "Başlangıç Durumu Seçin";
             // 
             // goalStateGB
             // 
@@ -225,7 +225,7 @@
             this.goalStateGB.Size = new System.Drawing.Size(238, 239);
             this.goalStateGB.TabIndex = 31;
             this.goalStateGB.TabStop = false;
-            this.goalStateGB.Text = "Hedef Durum";
+            this.goalStateGB.Text = "Hedef Durumu Seçin";
             // 
             // goalButton2
             // 

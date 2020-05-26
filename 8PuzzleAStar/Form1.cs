@@ -13,16 +13,21 @@ namespace _8PuzzleAStar
     public partial class Form1 : Form
     {
         Node node;
+
+        int[,] StartState;
+        int[,] GoalState;
+
         public Form1()
         {
             InitializeComponent();
-             node = new Node();
+            node = new Node();
             populateStartInitialState();
             populateGoalInitialState();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+
             bool found = false;
             int selected_depth = 0;
 
@@ -32,17 +37,20 @@ namespace _8PuzzleAStar
             List<Node> Checked = new List<Node>();
             List<string> actions = new List<string>();
 
-            int[,] GoalState = new int[,] {
-                { 1 , 3 , 2 },
-                { 8 , 0 , 4 },
-                { 5 , 6 , 7 }
-            };
+            setGoalState();
+            setStartState();
 
-            int[,] StartState = new int[,] {
-                { 1 , 2 , 3 },
-                { 8 , 0 , 4 },
-                { 7 , 6 , 5 }
-            };
+            //int[,] GoalState = new int[,] {
+            //    { 1 , 3 , 2 },
+            //    { 8 , 0 , 4 },
+            //    { 5 , 6 , 7 }
+            //};
+
+            //int[,] StartState = new int[,] {
+            //    { 1 , 2 , 3 },
+            //    { 8 , 0 , 4 },
+            //    { 7 , 6 , 5 }
+            //};
 
             Node start = new Node()
             {
@@ -643,6 +651,51 @@ namespace _8PuzzleAStar
             {
                 buttons[i].Text = arr[i].ToString();
             }
+        }
+
+        private void setStartState()
+        {
+            Control groupBox = startStateSelected;
+
+            List<Button> buttons = groupBox.Controls.OfType<Button>().ToList();
+
+            int[,] numbers = new int[3, 3];
+
+            int i = 0;
+            for (int m = 0; m < 3; m++)
+            {
+                for (int n = 0; n < 3; n++)
+                {
+                    numbers[m, n] = int.Parse(buttons[i].Text);
+                    i++;
+                }
+            }
+
+            StartState = numbers;
+            Console.WriteLine(StartState.Length);
+        }
+
+        private void setGoalState()
+        {
+            Control groupBox = goalStateSelected;
+
+            List<Button> buttons = groupBox.Controls.OfType<Button>().ToList();
+
+            int[,] numbers = new int[3, 3];
+
+            int i = 0;
+            for (int m = 0; m < 3; m++)
+            {
+                for (int n = 0; n < 3; n++)
+                {
+                    numbers[m, n] = int.Parse(buttons[i].Text);
+                    i++;
+                }
+            }
+
+            GoalState = numbers;
+
+            Console.WriteLine(GoalState.Length);
         }
 
 
