@@ -25,13 +25,13 @@ namespace _8PuzzleAStar
             populateGoalInitialState();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        public void solve()
         {
 
             bool found = false;
-            int selected_depth = 0;
+            int depth = 0;
 
-            int Max_Depth = 50;
+            int maxDepth = 50;
 
             List<Node> FrontHere = new List<Node>();
             List<Node> Checked = new List<Node>();
@@ -46,19 +46,6 @@ namespace _8PuzzleAStar
                 return;
             }
 
-
-            //int[,] GoalState = new int[,] {
-            //    { 1 , 3 , 2 },
-            //    { 8 , 0 , 4 },
-            //    { 5 , 6 , 7 }
-            //};
-
-            //int[,] StartState = new int[,] {
-            //    { 1 , 2 , 3 },
-            //    { 8 , 0 , 4 },
-            //    { 7 , 6 , 5 }
-            //};
-
             Node start = new Node()
             {
                 state = StartState,
@@ -66,23 +53,23 @@ namespace _8PuzzleAStar
             };
             FrontHere.Add(start);
 
-            void print_state(int[,] state)
+            void printState(int[,] state)
             {
-                string to_print = "";
+                string str = "";
 
                 for (int j = 0; j < 3; j++)
                 {
                     for (int i = 0; i < 3; i++)
                     {
-                        to_print += state[j, i] + " ";
+                        str += state[j, i] + " ";
                     }
-                    to_print += "\n";
+                    str += "\n";
                 }
-                stepsLog.Text += to_print + "\n";
+                stepsLog.Text += str + "\n";
             }
 
 
-            bool can_right(int[,] state)
+            bool canRight(int[,] state)
             {
                 for (int i = 0; i < 3; i++)
                 {
@@ -93,7 +80,7 @@ namespace _8PuzzleAStar
                 }
                 return true;
             }
-            bool can_left(int[,] state)
+            bool canLeft(int[,] state)
             {
                 for (int i = 0; i < 3; i++)
                 {
@@ -104,7 +91,7 @@ namespace _8PuzzleAStar
                 }
                 return true;
             }
-            bool can_up(int[,] state)
+            bool canUp(int[,] state)
             {
                 for (int i = 0; i < 3; i++)
                 {
@@ -115,7 +102,7 @@ namespace _8PuzzleAStar
                 }
                 return true;
             }
-            bool can_down(int[,] state)
+            bool canDown(int[,] state)
             {
                 for (int i = 0; i < 3; i++)
                 {
@@ -129,9 +116,9 @@ namespace _8PuzzleAStar
 
 
 
-            int[,] right(int[,] state)
+            int[,] rightMove(int[,] state)
             {
-                int[,] what = new int[,] {
+                int[,] temp = new int[,] {
                     { 1 , 2 , 3 },
                     { 4 , 5 , 6 },
                     { 7 , 0 , 8 }
@@ -140,21 +127,21 @@ namespace _8PuzzleAStar
                 {
                     for (int width = 0; width < 3; width++)
                     {
-                        what[height, width] = state[height, width];
+                        temp[height, width] = state[height, width];
                     }
                 }
 
-                int j = zero_position(state, false);
-                int i = zero_position(state);
+                int j = zeroPosition(state, false);
+                int i = zeroPosition(state);
 
-                what[j, i] = state[j, i + 1];
-                what[j, i + 1] = 0;
+                temp[j, i] = state[j, i + 1];
+                temp[j, i + 1] = 0;
 
-                return what;
+                return temp;
             }
-            int[,] left(int[,] state)
+            int[,] leftMove(int[,] state)
             {
-                int[,] what = new int[,] {
+                int[,] temp = new int[,] {
                     { 1 , 2 , 3 },
                     { 4 , 5 , 6 },
                     { 7 , 0 , 8 }
@@ -163,21 +150,21 @@ namespace _8PuzzleAStar
                 {
                     for (int width = 0; width < 3; width++)
                     {
-                        what[height, width] = state[height, width];
+                        temp[height, width] = state[height, width];
                     }
                 }
 
-                int j = zero_position(state, false);
-                int i = zero_position(state);
+                int j = zeroPosition(state, false);
+                int i = zeroPosition(state);
 
-                what[j, i] = state[j, i - 1];
-                what[j, i - 1] = 0;
+                temp[j, i] = state[j, i - 1];
+                temp[j, i - 1] = 0;
 
-                return what;
+                return temp;
             }
-            int[,] up(int[,] state)
+            int[,] upMove(int[,] state)
             {
-                int[,] what = new int[,] {
+                int[,] temp = new int[,] {
                     { 1 , 2 , 3 },
                     { 4 , 5 , 6 },
                     { 7 , 0 , 8 }
@@ -186,21 +173,21 @@ namespace _8PuzzleAStar
                 {
                     for (int width = 0; width < 3; width++)
                     {
-                        what[height, width] = state[height, width];
+                        temp[height, width] = state[height, width];
                     }
                 }
 
-                int j = zero_position(state, false);
-                int i = zero_position(state);
+                int j = zeroPosition(state, false);
+                int i = zeroPosition(state);
 
-                what[j, i] = state[j - 1, i];
-                what[j - 1, i] = 0;
+                temp[j, i] = state[j - 1, i];
+                temp[j - 1, i] = 0;
 
-                return what;
+                return temp;
             }
-            int[,] down(int[,] state)
+            int[,] downMove(int[,] state)
             {
-                int[,] what = new int[,] {
+                int[,] temp = new int[,] {
                     { 1 , 2 , 3 },
                     { 4 , 5 , 6 },
                     { 7 , 0 , 8 }
@@ -209,22 +196,22 @@ namespace _8PuzzleAStar
                 {
                     for (int width = 0; width < 3; width++)
                     {
-                        what[height, width] = state[height, width];
+                        temp[height, width] = state[height, width];
                     }
                 }
 
-                int j = zero_position(state, false);
-                int i = zero_position(state);
+                int j = zeroPosition(state, false);
+                int i = zeroPosition(state);
 
-                what[j, i] = state[j + 1, i];
-                what[j + 1, i] = 0;
+                temp[j, i] = state[j + 1, i];
+                temp[j + 1, i] = 0;
 
-                return what;
+                return temp;
             }
 
-            int zero_position(int[,] state, bool width = true)
+            int zeroPosition(int[,] state, bool width = true)
             {
-                int what = 0;
+                int temp = 0;
 
                 for (int i = 0; i < 3; i++)
                 {
@@ -233,28 +220,28 @@ namespace _8PuzzleAStar
                         if (state[j, i] == 0)
                         {
                             if (width == true)
-                                what = i;
+                                temp = i;
                             else
-                                what = j;
+                                temp = j;
                         }
                     }
                 }
-                return what;
+                return temp;
             }
 
-            bool was_checked(int[,] state)
+            bool isCheck(int[,] state)
             {
-                bool what = false;
+                bool temp = false;
 
                 foreach (Node nd in Checked)
                 {
                     if (match_array(nd.state, state))
                     {
-                        what = true;
+                        temp = true;
                     }
                 }
 
-                return what;
+                return temp;
             }
 
             bool match_array(int[,] arr1, int[,] arr2)
@@ -270,7 +257,7 @@ namespace _8PuzzleAStar
                 return true;
             }
 
-            string get_action(int[,] state)
+            string getAction(int[,] state)
             {
                 foreach (Node nd in Checked)
                 {
@@ -282,91 +269,91 @@ namespace _8PuzzleAStar
                 return "none";
             }
 
-            void print_path(int[,] state, string action)
+            void printSteps(int[,] state, string action)
             {
-                int[,] current_state = state;
+                int[,] currentState = state;
 
-                if (action == "right")
+                if (action == "rightMove")
                 {
-                    current_state = left(current_state);
-                    actions.Add("right");
+                    currentState = leftMove(currentState);
+                    actions.Add("rightMove");
                 }
 
-                else if (action == "left")
+                else if (action == "leftMove")
                 {
-                    current_state = right(current_state);
-                    actions.Add("left");
+                    currentState = rightMove(currentState);
+                    actions.Add("leftMove");
                 }
-                else if (action == "up")
+                else if (action == "upMove")
                 {
-                    current_state = down(current_state);
-                    actions.Add("up");
+                    currentState = downMove(currentState);
+                    actions.Add("upMove");
                 }
-                else if (action == "down")
+                else if (action == "downMove")
                 {
-                    current_state = up(current_state);
-                    actions.Add("down");
+                    currentState = upMove(currentState);
+                    actions.Add("downMove");
                 }
 
-                while (!match_array(current_state, StartState))
+                while (!match_array(currentState, StartState))
                 {
-                    string current_action = get_action(current_state);
+                    string current_action = getAction(currentState);
 
-                    if (current_action == "right")
+                    if (current_action == "rightMove")
                     {
-                        current_state = left(current_state);
-                        actions.Add("right");
+                        currentState = leftMove(currentState);
+                        actions.Add("rightMove");
                     }
 
-                    else if (current_action == "left")
+                    else if (current_action == "leftMove")
                     {
-                        current_state = right(current_state);
-                        actions.Add("left");
+                        currentState = rightMove(currentState);
+                        actions.Add("leftMove");
                     }
-                    else if (current_action == "up")
+                    else if (current_action == "upMove")
                     {
-                        current_state = down(current_state);
-                        actions.Add("up");
+                        currentState = downMove(currentState);
+                        actions.Add("upMove");
                     }
-                    else if (current_action == "down")
+                    else if (current_action == "downMove")
                     {
-                        current_state = up(current_state);
-                        actions.Add("down");
+                        currentState = upMove(currentState);
+                        actions.Add("downMove");
                     }
                 }
 
 
-                stepsLog.Text += ($"Steps ({actions.Count} Step):\n");
-                print_state(StartState);
+                stepsLog.Text += ("Adımlar ("+actions.Count+") : \n");
+                printState(StartState);
 
                 for (int a = actions.Count - 1; a >= 0; a--)
                 {
 
-                    if (actions[a] == "right")
+                    if (actions[a] == "rightMove")
                     {
-                        current_state = right(current_state);
+                        currentState = rightMove(currentState);
                     }
 
-                    else if (actions[a] == "left")
+                    else if (actions[a] == "leftMove")
                     {
-                        current_state = left(current_state);
+                        currentState = leftMove(currentState);
                     }
-                    else if (actions[a] == "up")
+                    else if (actions[a] == "upMove")
                     {
-                        current_state = up(current_state);
+                        currentState = upMove(currentState);
                     }
-                    else if (actions[a] == "down")
+                    else if (actions[a] == "downMove")
                     {
-                        current_state = down(current_state);
+                        currentState = downMove(currentState);
                     }
 
 
 
-                    print_state(current_state);
+                    printState(currentState);
                 }
             }
 
-            int h(int[,] state)
+            int control(int[,] state)
             {
                 int match = 0;
 
@@ -381,98 +368,103 @@ namespace _8PuzzleAStar
                 return 9 - match;
             }
 
-            Node get_state()
+            Node getState()
             {
-                Node what = new Node();
+                Node temp = new Node();
                 int index = 0;
-                int selected_index = 0;
-                int min_f = Max_Depth + 9;
+                int selectedIndex = 0;
+                int min_f = maxDepth + 9;
                 foreach (Node nd in FrontHere)
                 {
-                    if (nd.depth + h(nd.state) < min_f)
+                    if (nd.depth + control(nd.state) < min_f)
                     {
-                        min_f = nd.depth + h(nd.state);
-                        what.state = nd.state;
-                        what.depth = nd.depth;
-                        what.action = nd.action;
-                        selected_index = index;
+                        min_f = nd.depth + control(nd.state);
+                        temp.state = nd.state;
+                        temp.depth = nd.depth;
+                        temp.action = nd.action;
+                        selectedIndex = index;
                     }
                     index++;
                 }
 
-                FrontHere.RemoveAt(selected_index);
+                FrontHere.RemoveAt(selectedIndex);
 
-                return what;
+                return temp;
             }
 
 
-            stepsLog.Text += ("Start State:\n");
-            print_state(StartState);
-            stepsLog.Text += ("Goal State:\n");
-            print_state(GoalState);
+            stepsLog.Text += ("Başlangıç Durumu:\n");
+            printState(StartState);
+            stepsLog.Text += ("Hedef Durum:\n");
+            printState(GoalState);
 
 
-            while (FrontHere.Count != 0 && !found && selected_depth <= Max_Depth)
+            while (FrontHere.Count != 0 && !found && depth <= maxDepth)
             {
-                Node best_result = get_state();
-                if (match_array(best_result.state, GoalState))
+                Node bestResult = getState();
+                if (match_array(bestResult.state, GoalState))
                 {
-                    print_path(best_result.state, best_result.action);
+                    printSteps(bestResult.state, bestResult.action);
                     found = true;
                 }
                 else
                 {
 
-                    if (can_right(best_result.state) && !was_checked(right(best_result.state)))
+                    if (canRight(bestResult.state) && !isCheck(rightMove(bestResult.state)))
                     {
                         Node data = new Node();
-                        data.depth = best_result.depth + 1;
-                        data.state = right(best_result.state);
-                        data.action = "right";
+                        data.depth = bestResult.depth + 1;
+                        data.state = rightMove(bestResult.state);
+                        data.action = "rightMove";
 
                         FrontHere.Add(data);
                     }
 
-                    if (can_left(best_result.state) && !was_checked(left(best_result.state)))
+                    if (canLeft(bestResult.state) && !isCheck(leftMove(bestResult.state)))
                     {
                         Node data = new Node();
-                        data.depth = best_result.depth + 1;
-                        data.state = left(best_result.state);
-                        data.action = "left";
+                        data.depth = bestResult.depth + 1;
+                        data.state = leftMove(bestResult.state);
+                        data.action = "leftMove";
 
                         FrontHere.Add(data);
                     }
 
-                    if (can_up(best_result.state) && !was_checked(up(best_result.state)))
+                    if (canUp(bestResult.state) && !isCheck(upMove(bestResult.state)))
                     {
                         Node data = new Node();
-                        data.depth = best_result.depth + 1;
-                        data.state = up(best_result.state);
-                        data.action = "up";
+                        data.depth = bestResult.depth + 1;
+                        data.state = upMove(bestResult.state);
+                        data.action = "upMove";
 
                         FrontHere.Add(data);
                     }
 
-                    if (can_down(best_result.state) && !was_checked(down(best_result.state)))
+                    if (canDown(bestResult.state) && !isCheck(downMove(bestResult.state)))
                     {
                         Node data = new Node();
-                        data.depth = best_result.depth + 1;
-                        data.state = down(best_result.state);
-                        data.action = "down";
+                        data.depth = bestResult.depth + 1;
+                        data.state = downMove(bestResult.state);
+                        data.action = "downMove";
 
                         FrontHere.Add(data);
                     }
 
-                    selected_depth = best_result.depth;
-                    Checked.Add(best_result);
+                    depth = bestResult.depth;
+                    Checked.Add(bestResult);
                 }
             }
-            if (selected_depth > Max_Depth)
+            if (depth > maxDepth)
             {
                 Console.WriteLine("Can't Solve!");
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            solve();
         
-    }
+        }
 
         private void removeTextsFromButtons(Control groupBox)
         {

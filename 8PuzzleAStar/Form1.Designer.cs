@@ -596,6 +596,7 @@
             // 
             // stepsLog
             // 
+            this.stepsLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.stepsLog.Location = new System.Drawing.Point(805, 12);
             this.stepsLog.Name = "stepsLog";
             this.stepsLog.ReadOnly = true;
